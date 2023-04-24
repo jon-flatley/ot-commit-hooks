@@ -1,0 +1,28 @@
+- id: buildifier-fix
+  name: buildifier-fix
+  description: "Runs buildifier_fix"
+  files: ^BUILD$|.*\.bzl$|.*\.bazel$
+  entry: >
+    bazel run --run_under='cd $REPO_TOP &&'
+    @ot_hack_bazelbuild_buildtools//buildifier:buildifier --
+  language: system
+  require_serial: True
+  types: [bazel]
+
+- id: rustfmt
+  name: rustfmt
+  description: "Runs rustfmt"
+  files: .*\.rs$
+  entry: rustfmt
+  language: system
+  require_serial: True
+  types: [rust]
+
+- id: clang-format
+  name: clang-format
+  description: "Runs clang-format"
+  files: .*\.h$|.*\.c$|.*\.cc$|.*\.cpp$
+  entry: clang-format -i
+  language: system
+  require_serial: True
+  types_or: [c, c++]
